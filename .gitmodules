@@ -1,0 +1,9 @@
+[submodule "cookbooks/python"]
+	path = cookbooks/python
+	url = https://github.com/poise/python.git
+[submodule "cookbooks/awscli"]
+	path = cookbooks/awscli
+	url = https://github.com/shlomoswidler/awscli.git
+[submodule "cookbooks/cron"]
+	path = cookbooks/cron
+	url = https://github.com/opscode-cookbooks/cron.git

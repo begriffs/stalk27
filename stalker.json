@@ -1,0 +1,48 @@
+{
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": "",
+    "broker_id": "",
+    "base_ami": ""
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "us-west-1",
+    "source_ami": "ami-4b6f650e",
+    "instance_type": "t2.micro",
+    "ssh_username": "ec2-user",
+    "ami_name": "Bus Stalker {{timestamp}}",
+    "ami_groups": ["all"]
+  }],
+  "provisioners": [{
+    "type": "file",
+    "source": "sources/savepoint.sh",
+    "destination": "/home/ec2-user/savepoint.sh"
+  }, {
+    "type": "chef-solo",
+    "cookbook_paths": ["cookbooks"],
+    "run_list": [
+      "recipe[awscli]"
+    ],
+    "json": {
+      "awscli": {
+        "config_profiles": {
+          "default" : {
+            "region"                : "us-west-1",
+            "aws_access_key_id"     : "{{user `aws_access_key`}}",
+            "aws_secret_access_key" : "{{user `aws_secret_key`}}",
+            "user"                  : "ec2-user"
+          }
+        }
+      }
+    }
+  }, {
+    "type": "shell",
+    "inline": [
+      "chmod a+x /home/ec2-user/savepoint.sh",
+      "sudo sh -c 'echo \"* * * * * ec2-user /home/ec2-user/savepoint.sh\" > /etc/crontab'"
+    ]
+  }]
+}
