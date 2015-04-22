@@ -11,29 +11,21 @@ with me one too many times and now it's time to get even.
     to use a different region you will need to specify the region in future
     steps when noted.
 
-2. Create Amazon IAM credentials for deployment.
-    Assuming you are signed into the AWS console, visit the [user
-    admin](https://console.aws.amazon.com/iam/home#users) page. Create
-    a new user and note their security credentials (ID and secret key).
-    Then attach a user policy of "Power User" to the newly created user.
-
-3. [Create EC2 keypair](https://console.aws.amazon.com/ec2/v2/home?region=us-west-1#KeyPairs:sort=keyName).
-
-4. Clone this repo including its chef recipe submodules.
+2. Clone this repo including its chef recipe submodules.
     ```bash
-    git clone --recursive https://github.com/begriffs/microservice-template.git
+    git clone --recursive https://github.com/begriffs/stalk27.git
     ```
 
-5. Install <a href="https://www.packer.io/" target="_blank">Packer</a>.
+3. Install <a href="https://www.packer.io/" target="_blank">Packer</a>.
     On a Mac you can use homebrew:
     ```bash
     brew tap homebrew/binary
     brew install packer
     ```
-6. Build the AMI
+4. Build the AMI
     ```bash
     packer build -var 'aws_access_key=xxx' -var 'aws_secret_key=xxx' stalker.json
     ```
 
-7. Launch the AMI from the Amazon Web Console. Then go watch the
-   files accumulate on your S3 bucket.
+5. Launch the AMI from the Amazon Web Console. Then go watch the
+    files accumulate on your S3 bucket.
